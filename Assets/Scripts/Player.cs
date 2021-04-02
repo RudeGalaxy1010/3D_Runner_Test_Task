@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     private bool canTakeDamage = true;
 
     #region Damage
-    public void TakeDamage(int damage)
+    public void TryTakeDamage(int damage)
     {
         if (damage <= 0)
         {

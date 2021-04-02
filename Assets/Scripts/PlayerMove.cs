@@ -19,6 +19,12 @@ public class PlayerMove : MonoBehaviour
         targetPosition = new Vector3(xCoord, 0, 0);
     }
 
+    public void SetPosition(Vector3 position)
+    {
+        targetPosition = position;
+        transform.position = position;
+    }
+
     private void Update()
     {
         // Move player to the target position

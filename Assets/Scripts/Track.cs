@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class Track : MonoBehaviour
 {
+    [Header("Speed")]
+    public float Speed;
+
     [Header("Segments")]
     [SerializeField] private GameObject _segmentPrefab;
     [SerializeField] private int _segmentsCount = 3;
-    
-    [Header("Speed")]
-    public float Speed;
 
     private List<GameObject> _segments = new List<GameObject>(3);
 

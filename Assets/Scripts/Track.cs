@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Makes the segments move/spawn/destroy
+// Also controls segments speed
 public class Track : MonoBehaviour
 {
     [Header("Speed")]

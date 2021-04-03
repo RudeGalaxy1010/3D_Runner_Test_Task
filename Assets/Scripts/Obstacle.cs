@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// Report collisions (by the trigger) with player
+// And call damage function
 [RequireComponent(typeof(Collider))]
 public class Obstacle : MonoBehaviour
 {

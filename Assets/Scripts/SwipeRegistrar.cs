@@ -1,44 +1,48 @@
-using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class SwipeRegistrar : MonoBehaviour
+// Register user input (for smartphone - swipes | for PC - 'A' and 'D' keys)
+public class SwipeRegistrar : MonoBehaviour, IDragHandler, IBeginDragHandler
 {
+    [Header("Swipes")]
+    public float MinDeltaToRegister = 0.2f;
+
+    [Header("PlayerMove component")]
     [SerializeField] private PlayerMove _player;
 
-    private Transform _currentPlayerPosition;
-    [SerializeField] private List<Transform> _playerPositions = new List<Transform>(3);
-
-    private void Start()
-    {
-        var middlePositionIndex = Mathf.FloorToInt(_playerPositions.Count / 2);
-        _currentPlayerPosition = _playerPositions[middlePositionIndex];
-    }
-
+#if UNITY_STANDALONE
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            MovePlayer(-1);
+            _player.MovePlayerInXDirection(-1);
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            MovePlayer(1);
+            _player.MovePlayerInXDirection(1);
+        }
+    }
+#endif
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        var xDelta = eventData.delta.x;
+        if (Mathf.Abs(xDelta) > MinDeltaToRegister)
+        {
+            if (xDelta < 0)
+            {
+                _player.MovePlayerInXDirection(-1);
+            }
+            else if (xDelta > 0)
+            {
+                _player.MovePlayerInXDirection(1);
+            }
         }
     }
 
-    private void MovePlayer(int xDirection)
+    public void OnDrag(PointerEventData eventData)
     {
-        var newIndex = _playerPositions.IndexOf(_currentPlayerPosition) + xDirection;
-
-        // If position is behind the left or right wall
-        if (newIndex == 0 || newIndex == _playerPositions.Count - 1)
-        {
-            _player.SetTargetPositionWithReturn(_playerPositions[newIndex].position);
-            return;
-        }
-
-        // If position is between left and right wall
-        _player.SetTargetPosition(_playerPositions[newIndex].position);
-        _currentPlayerPosition = _playerPositions[newIndex];
+        // This method is necessary to be here
+        // !Swipes won't work without this!
     }
 }

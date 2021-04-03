@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
+// Contains info about player health
+// And takes control about damage
 [RequireComponent(typeof(PlayerMove))]
 public class Player : MonoBehaviour
 {
@@ -8,12 +10,13 @@ public class Player : MonoBehaviour
     [SerializeField] private int _health;
     [SerializeField] private float _minDamageTime;
 
+    [Header("Animation")]
+    [SerializeField] private Animation _damageAnimation;
     private bool canTakeDamage = true;
-    private Animation _damageAnimation;
 
     private void Start()
     {
-        _damageAnimation = GetComponent<Animation>();
+        // Giving player immortality for the first seconds of game
         StartCoroutine(WaitForNextDamage(_minDamageTime));
     }
 
@@ -44,6 +47,7 @@ public class Player : MonoBehaviour
         StartCoroutine(WaitForNextDamage(_minDamageTime));
     }
 
+    // Give immortality for a while
     private IEnumerator WaitForNextDamage(float timeInSeconds)
     {
         canTakeDamage = false;

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Contains info about obstacle holders
+// And spawn obstacles by the random in holders' positions
 public class TrackSegment : MonoBehaviour
 {
     public List<Transform> ObstacleHolders = new List<Transform>();

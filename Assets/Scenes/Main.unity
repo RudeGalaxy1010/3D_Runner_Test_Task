@@ -207,7 +207,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1145463181}
   m_Direction: 0
   m_MinValue: 0.5
-  m_MaxValue: 10
+  m_MaxValue: 5
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
@@ -543,7 +543,7 @@ MonoBehaviour:
   StartSpeed: 10
   SpeedMultiplier: 1
   _segmentPrefab: {fileID: 8301322190340359829, guid: 36ccce277625b5c41a123c6a8a71f27e, type: 3}
-  _segmentsCount: 5
+  _segmentsCount: 3
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,7 +560,7 @@ GameObject:
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!81 &963194226
 AudioListener:
@@ -993,8 +993,8 @@ MeshRenderer:
   m_GameObject: {fileID: 1521620648}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1061,6 +1061,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: 3
   _minDamageTime: 2
+  _damageAnimation: {fileID: 1521620656}
 --- !u!114 &1521620654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1073,8 +1074,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6089721a08623f4c8139c64f765955e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startXSpeed: 25
   XSpeedMultiplier: 1
+  _startXSpeed: 25
+  _playerPositions:
+  - {fileID: 395451210}
+  - {fileID: 704332990}
+  - {fileID: 1179367790}
+  - {fileID: 2068660693}
+  - {fileID: 1093893140}
 --- !u!54 &1521620655
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1150,13 +1157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e5be3ee16a4d504182148bad6960125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MinDeltaToRegister: 0.2
   _player: {fileID: 1521620654}
-  _playerPositions:
-  - {fileID: 395451210}
-  - {fileID: 704332990}
-  - {fileID: 1179367790}
-  - {fileID: 2068660693}
-  - {fileID: 1093893140}
 --- !u!1 &1730358756
 GameObject:
   m_ObjectHideFlags: 0

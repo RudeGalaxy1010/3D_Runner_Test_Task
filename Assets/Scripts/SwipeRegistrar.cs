@@ -10,16 +10,17 @@ public class SwipeRegistrar : MonoBehaviour
 
     private void Start()
     {
-        _currentPlayerPosition = _playerPositions[1];
+        var middlePositionIndex = Mathf.FloorToInt(_playerPositions.Count / 2);
+        _currentPlayerPosition = _playerPositions[middlePositionIndex];
     }
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             MovePlayer(-1);
         }
-        else if (Input.GetKeyUp(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.D))
         {
             MovePlayer(1);
         }
@@ -28,11 +29,15 @@ public class SwipeRegistrar : MonoBehaviour
     private void MovePlayer(int xDirection)
     {
         var newIndex = _playerPositions.IndexOf(_currentPlayerPosition) + xDirection;
-        if (newIndex >= _playerPositions.Count || newIndex < 0)
+
+        // If position is behind the left or right wall
+        if (newIndex == 0 || newIndex == _playerPositions.Count - 1)
         {
+            _player.SetTargetPositionWithReturn(_playerPositions[newIndex].position);
             return;
         }
 
+        // If position is between left and right wall
         _player.SetTargetPosition(_playerPositions[newIndex].position);
         _currentPlayerPosition = _playerPositions[newIndex];
     }

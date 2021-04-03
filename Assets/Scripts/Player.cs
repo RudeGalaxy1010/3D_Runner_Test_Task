@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
         StartCoroutine(WaitForNextDamage(_minDamageTime));
     }
 
-    public IEnumerator WaitForNextDamage(float timeInSeconds)
+    private IEnumerator WaitForNextDamage(float timeInSeconds)
     {
         canTakeDamage = false;
         yield return new WaitForSeconds(timeInSeconds);

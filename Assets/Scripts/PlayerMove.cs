@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
@@ -24,6 +25,22 @@ public class PlayerMove : MonoBehaviour
         }
 
         targetPosition = position;
+    }
+
+    public void SetTargetPositionWithReturn(Vector3 position)
+    {
+        // Set next position
+        var previousPosition = transform.position;
+        SetTargetPosition(position);
+
+        // Wait till reach the position and return to previous
+        StartCoroutine(ReturnWhenTargetPositionReached(previousPosition));
+    }
+
+    private IEnumerator ReturnWhenTargetPositionReached(Vector3 positionToReturn)
+    {
+        yield return new WaitUntil(()=> targetPosition == transform.position);
+        SetTargetPosition(positionToReturn);
     }
 
     private void Update()

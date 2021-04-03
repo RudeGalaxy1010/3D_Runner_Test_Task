@@ -9,6 +9,12 @@ public class Player : MonoBehaviour
     [SerializeField] private float _minDamageTime;
 
     private bool canTakeDamage = true;
+    private Animation _damageAnimation;
+
+    private void Start()
+    {
+        _damageAnimation = GetComponent<Animation>();
+    }
 
     #region Damage
     public void TryTakeDamage(int damage)
@@ -25,6 +31,9 @@ public class Player : MonoBehaviour
         }
 
         _health -= damage;
+        _damageAnimation.Play();
+        Debug.Log($"Got damaged by {damage} \n" +
+                  $"Health = {_health}");
 
         if (_health <= 0)
         {

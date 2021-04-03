@@ -5,6 +5,7 @@ public class PlayerMove : MonoBehaviour
 {
     [Header("Speed")]
     [SerializeField] private float _xSpeed;
+    public float XSpeedMultiplier = 1;
     
     private Vector3 targetPosition;
 
@@ -14,15 +15,15 @@ public class PlayerMove : MonoBehaviour
         targetPosition = transform.position;
     }
 
-    public void SetTargetPositionX(float xCoord)
+    public void SetTargetPosition(Vector3 position)
     {
-        targetPosition = new Vector3(xCoord, 0, 0);
-    }
+        // If trying to move player not only by X coord
+        if (position.y != transform.position.y || position.z != transform.position.z)
+        {
+            position = new Vector3(position.x, 0, 0);
+        }
 
-    public void SetPosition(Vector3 position)
-    {
         targetPosition = position;
-        transform.position = position;
     }
 
     private void Update()
@@ -31,7 +32,7 @@ public class PlayerMove : MonoBehaviour
         if (transform.position != targetPosition)
         {
             transform.position = Vector3.
-                MoveTowards(transform.position, targetPosition, _xSpeed * Time.deltaTime);
+                MoveTowards(transform.position, targetPosition, _xSpeed * XSpeedMultiplier * Time.deltaTime);
         }
     }
 }

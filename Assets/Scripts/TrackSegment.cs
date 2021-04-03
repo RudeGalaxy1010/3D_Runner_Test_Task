@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,9 +19,9 @@ public class TrackSegment : MonoBehaviour
 
     private GameObject SpawnObstacle(Vector3 position)
     {
-        Debug.Log("Spawn Obstacle");
         var randomObstaclePrefab = ObstaclePrefabs[Random.Range(0, ObstaclePrefabs.Count)];
-        var newObstacle = Instantiate(randomObstaclePrefab, position, Quaternion.identity, transform);
+        var newObstacle = Instantiate(randomObstaclePrefab, position, Quaternion.identity);
+        newObstacle.transform.SetParent(transform);
         return newObstacle;
     }
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
     public int damage = 1;
-    public Transform SafePositionHolder;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -12,9 +11,6 @@ public class Obstacle : MonoBehaviour
         {
             // Try apply damage to player
             player.TryTakeDamage(damage);
-
-            // Teleport player in safe position
-            other.GetComponent<PlayerMove>().SetPosition(SafePositionHolder.position);
         }
     }
 }

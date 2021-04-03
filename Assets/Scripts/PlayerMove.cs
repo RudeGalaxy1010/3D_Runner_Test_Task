@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     [Header("Speed")]
-    [SerializeField] private float _xSpeed;
+    [SerializeField] private float _startXSpeed = 25;
     public float XSpeedMultiplier = 1;
     
     private Vector3 targetPosition;
@@ -14,6 +14,21 @@ public class PlayerMove : MonoBehaviour
     {
         // Initialize target position
         targetPosition = transform.position;
+    }
+
+    private void Update()
+    {
+        // Move player to the target position
+        if (transform.position != targetPosition)
+        {
+            transform.position = Vector3.
+                MoveTowards(transform.position, targetPosition, _startXSpeed * XSpeedMultiplier * Time.deltaTime);
+        }
+    }
+
+    public void SetSpeedMultiplier(float value)
+    {
+        XSpeedMultiplier = value;
     }
 
     public void SetTargetPosition(Vector3 position)
@@ -41,15 +56,5 @@ public class PlayerMove : MonoBehaviour
     {
         yield return new WaitUntil(()=> targetPosition == transform.position);
         SetTargetPosition(positionToReturn);
-    }
-
-    private void Update()
-    {
-        // Move player to the target position
-        if (transform.position != targetPosition)
-        {
-            transform.position = Vector3.
-                MoveTowards(transform.position, targetPosition, _xSpeed * XSpeedMultiplier * Time.deltaTime);
-        }
     }
 }

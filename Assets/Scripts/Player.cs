@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _damageAnimation = GetComponent<Animation>();
+        StartCoroutine(WaitForNextDamage(_minDamageTime));
     }
 
     #region Damage

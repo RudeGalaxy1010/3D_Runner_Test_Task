@@ -4,7 +4,8 @@ using UnityEngine;
 public class Track : MonoBehaviour
 {
     [Header("Speed")]
-    public float Speed;
+    public float StartSpeed = 10;
+    public float SpeedMultiplier = 1;
 
     [Header("Segments")]
     [SerializeField] private GameObject _segmentPrefab;
@@ -31,7 +32,7 @@ public class Track : MonoBehaviour
         // Move segments
         foreach (var segment in _segments)
         {
-            segment.transform.position += Vector3.back * Speed * Time.deltaTime;
+            segment.transform.position += Vector3.back * StartSpeed * SpeedMultiplier * Time.deltaTime;
         }
 
         // Check if segment need to be destroyed
@@ -51,6 +52,11 @@ public class Track : MonoBehaviour
             var newSegment = SpawnNewSegment(newSegmentPosition);
             _segments.Insert(0, newSegment);
         }
+    }
+
+    public void SetSpeedMultiplier(float value)
+    {
+        SpeedMultiplier = value;
     }
 
     private GameObject SpawnNewSegment(Vector3 segmentPosition)

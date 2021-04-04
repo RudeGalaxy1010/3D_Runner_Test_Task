@@ -6,18 +6,22 @@ using UnityEngine;
 public class Track : MonoBehaviour
 {
     [Header("Speed")]
-    public float StartSpeed = 10;
     public float SpeedMultiplier = 1;
+    [SerializeField] private float _startSpeed = 10;
 
     [Header("Segments")]
     [SerializeField] private GameObject _segmentPrefab;
     [SerializeField] private int _segmentsCount = 3;
 
     private List<GameObject> _segments = new List<GameObject>(3);
+    private Transform _mainCameraTransform;
 
     private void Start()
     {
-        // Initialize segments, fill the list from the tail
+        // Cache the camera transform component
+        _mainCameraTransform = Camera.main.transform;
+
+        // Initialize segments, fill the list from the end
         var halfSegmentsCount = Mathf.FloorToInt(_segmentsCount / 2);
         for (int i = halfSegmentsCount; i >= -halfSegmentsCount; i--)
         {
@@ -34,11 +38,11 @@ public class Track : MonoBehaviour
         // Move segments
         foreach (var segment in _segments)
         {
-            segment.transform.position += Vector3.back * StartSpeed * SpeedMultiplier * Time.deltaTime;
+            segment.transform.position += Vector3.back * _startSpeed * SpeedMultiplier * Time.deltaTime;
         }
 
         // Check if segment need to be destroyed
-        var cameraZPos = Camera.main.transform.position.z;
+        var cameraZPos = _mainCameraTransform.position.z;
         var segmentZPos = _segments[_segments.Count - 1].transform.position.z;
         var maxDistance = _segments[_segments.Count - 1].transform.localScale.z / 2;
         if (cameraZPos - segmentZPos > maxDistance)

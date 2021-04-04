@@ -4,23 +4,23 @@ using UnityEngine;
 
 // Make the player move between positions
 // Also controls player's speed
-[RequireComponent(typeof(Player))]
+[RequireComponent(typeof(PlayerHealth))]
 public class PlayerMove : MonoBehaviour
 {
     [Header("Speed")]
     public float XSpeedMultiplier = 1;
     [SerializeField] private float _startXSpeed = 25;
 
-    [Header("Player components")]
+    [Header("Player component")]
     [SerializeField] private List<Transform> _playerPositions = new List<Transform>(3);
+    
     private Transform _currentPlayerPosition;
-
-    private Vector3 targetPosition;
+    private Vector3 _targetPosition;
 
     private void Start()
     {
         // Initialize target position
-        targetPosition = transform.position;
+        _targetPosition = transform.position;
         
         // Set a middle position to the player
         var middlePositionIndex = Mathf.FloorToInt(_playerPositions.Count / 2);
@@ -30,18 +30,22 @@ public class PlayerMove : MonoBehaviour
     private void Update()
     {
         // Move player to the target position
-        if (transform.position != targetPosition)
+        if (transform.position != _targetPosition)
         {
             transform.position = Vector3.
-                MoveTowards(transform.position, targetPosition, _startXSpeed * XSpeedMultiplier * Time.deltaTime);
+                MoveTowards(transform.position, _targetPosition, _startXSpeed * XSpeedMultiplier * Time.deltaTime);
         }
     }
 
+    #region Speed
+    // Method for slider, to control speed
     public void SetSpeedMultiplier(float value)
     {
         XSpeedMultiplier = value;
     }
+    #endregion
 
+    #region Position
     public void SetTargetPosition(Vector3 position)
     {
         // If trying to move player not only by X coord
@@ -50,7 +54,7 @@ public class PlayerMove : MonoBehaviour
             position = new Vector3(position.x, 0, 0);
         }
 
-        targetPosition = position;
+        _targetPosition = position;
     }
 
     public void SetTargetPositionWithReturn(Vector3 position)
@@ -81,7 +85,8 @@ public class PlayerMove : MonoBehaviour
 
     private IEnumerator ReturnAfterPositionReached(Vector3 positionToReturn)
     {
-        yield return new WaitUntil(()=> targetPosition == transform.position);
+        yield return new WaitUntil(()=> _targetPosition == transform.position);
         SetTargetPosition(positionToReturn);
     }
+    #endregion
 }

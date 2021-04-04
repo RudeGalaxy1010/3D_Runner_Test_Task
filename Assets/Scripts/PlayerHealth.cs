@@ -4,7 +4,7 @@ using UnityEngine;
 // Contains info about player health
 // And takes control about damage
 [RequireComponent(typeof(PlayerMove))]
-public class Player : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
     [Header("Health and damage")]
     [SerializeField] private int _health;
@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private Animation _damageAnimation;
-    private bool canTakeDamage = true;
+    private bool _canTakeDamage = true;
 
     private void Start()
     {
@@ -20,7 +20,6 @@ public class Player : MonoBehaviour
         StartCoroutine(WaitForNextDamage(_minDamageTime));
     }
 
-    #region Damage
     public void TryTakeDamage(int damage)
     {
         if (damage <= 0)
@@ -29,7 +28,7 @@ public class Player : MonoBehaviour
             Debug.LogError("Damage <= 0!");
         }
 
-        if (!canTakeDamage)
+        if (!_canTakeDamage)
         {
             return;
         }
@@ -50,9 +49,8 @@ public class Player : MonoBehaviour
     // Give immortality for a while
     private IEnumerator WaitForNextDamage(float timeInSeconds)
     {
-        canTakeDamage = false;
+        _canTakeDamage = false;
         yield return new WaitForSeconds(timeInSeconds);
-        canTakeDamage = true;
+        _canTakeDamage = true;
     }
-    #endregion
 }

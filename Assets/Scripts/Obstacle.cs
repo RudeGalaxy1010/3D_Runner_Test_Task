@@ -9,7 +9,7 @@ public class Obstacle : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out Player player))
+        if (other.gameObject.TryGetComponent(out PlayerHealth player))
         {
             // Try apply damage to player
             player.TryTakeDamage(damage);

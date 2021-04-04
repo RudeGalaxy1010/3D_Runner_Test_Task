@@ -10,6 +10,7 @@ public class TrackSegment : MonoBehaviour
 
     private void Start()
     {
+        // Spawn obstacles in positions randomly
         foreach (var obstacleHolder in ObstacleHolders)
         {
             if (Random.value > 0.5f)
